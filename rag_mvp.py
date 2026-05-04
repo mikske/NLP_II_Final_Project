@@ -16,13 +16,8 @@ import pandas as pd
 
 from langchain_core.documents import Document
 from langchain_text_splitters import CharacterTextSplitter, RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.retrievers import BM25Retriever
-from langchain_community.vectorstores import Chroma
-from langchain_community.retrievers import BM25Retriever
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.ensemble import EnsembleRetriever
-from langchain.retrievers.document_compressors import EmbeddingsFilter
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 
 DATA_PATH = Path("data/bank_docs.json")
 PERSIST_DIR = "chroma_bank"
