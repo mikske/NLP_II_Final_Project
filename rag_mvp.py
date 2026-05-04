@@ -19,7 +19,9 @@ from langchain_text_splitters import CharacterTextSplitter, RecursiveCharacterTe
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.retrievers import BM25Retriever
 from langchain_community.vectorstores import Chroma
-from langchain.retrievers import ContextualCompressionRetriever, EnsembleRetriever
+from langchain_community.retrievers import BM25Retriever
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.ensemble import EnsembleRetriever
 from langchain.retrievers.document_compressors import EmbeddingsFilter
 
 DATA_PATH = Path("data/bank_docs.json")
