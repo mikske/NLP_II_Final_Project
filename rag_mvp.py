@@ -137,6 +137,17 @@ def build_vectorstore(chunks: List[Document], persist_dir: str = PERSIST_DIR, re
         collection_name="bank_products",
     )
 
+class SimpleBM25Retriever:
+    def __init__(self, docs, k=4):
+        self.docs = docs
+        self.k = k
+        self.tokenized = [d.page_content.lower().split() for d in docs]
+        self.bm25 = BM25Okapi(self.tokenized)
+
+    def invoke(self, query):
+        scores = self.bm25.get_scores(query.lower().split())
+        top_idx = np.argsort(scores)[::-1][:self.k]
+        return [self.docs[i] for i in top_idx]
 
 #создаем несколько вариантов ретривера
 def build_retrievers(vectorstore: Chroma, chunks: List[Document]):
@@ -144,9 +155,8 @@ def build_retrievers(vectorstore: Chroma, chunks: List[Document]):
         search_type="similarity",
         search_kwargs={"k": 4},
     )
-
-    bm25 = BM25Retriever.from_documents(chunks)
-    bm25.k = 4
+    
+    bm25 = SimpleBM25Retriever(chunks, k=4)
 
     hybrid = EnsembleRetriever(
         retrievers=[similarity, bm25],
