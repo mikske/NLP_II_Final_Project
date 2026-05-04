@@ -19,10 +19,11 @@ from langchain_text_splitters import CharacterTextSplitter, RecursiveCharacterTe
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
+from rank_bm25 import BM25Okapi
+
 DATA_PATH = Path("data/bank_docs.json")
 PERSIST_DIR = "chroma_bank"
 EMBED_MODEL = "intfloat/multilingual-e5-large"
-
 
 #очищаем текст
 def clean_text(text: str) -> str:
